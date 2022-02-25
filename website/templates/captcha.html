@@ -1,0 +1,38 @@
+<html>
+    <audio controls>
+        <source src='/audio1' type="audio/x-wav">
+        your browser doesnot support
+    </audio>
+    <button onclick="fin('true')"> Verified</button>
+
+    <script>
+        var verified = 'false';
+        function fin(isVerified){
+            verified = isVerified;
+            var parentDoc = window.opener.document;
+            var btn = parentDoc.getElementById('verifybtn');
+            if(window.opener != null && !window.opener.closed){
+                parentDoc.getElementById("verify").value = isVerified;
+                var parentDoc = window.opener.document;
+                var btn = parentDoc.getElementById('verifybtn');
+                    
+                if(isVerified === 'true'){
+                    btn.innerText = "Verified ✔️";
+                    btn.style.background = "#05cc15";
+                }
+                else{
+                    
+                }
+            }
+            window.close();
+        }
+        window.onbeforeunload = function(){
+            if(verified === 'false'){
+                var parentDoc = window.opener.document;
+                var btn = parentDoc.getElementById('verifybtn');
+                btn.innerText = "Re-verify Captcha";
+                btn.style.background = "#fd0d0d";
+            }
+        }
+    </script>
+</html>

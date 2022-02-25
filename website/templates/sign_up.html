@@ -1,0 +1,107 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+content %}
+<style>
+  button{
+    cursor: pointer;
+    outline: 0;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;         
+    
+  }
+  button:hover {
+    
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0aca1a;
+    
+  }
+</style>
+<form method="POST" onsubmit="return verifyCaptchaDone()">
+  <h3 align="center">Sign Up</h3>
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="Enter email"
+    />
+  </div>
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="firstName"
+      name="firstName"
+      placeholder="Enter first name"
+    />
+  </div>
+  <div class="form-group">
+    <label for="password1">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password1"
+      name="password1"
+      placeholder="Enter password"
+    />
+  </div>
+  <div class="form-group">
+    <label for="password2">Password (Confirm)</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password2"
+      name="password2"
+      placeholder="Confirm password"
+    />
+  </div>
+  <div class="form-group">
+    <button onclick="captcha()" id='verifybtn' type="button">Verify Human</button>
+  </div>
+  
+  <div class="form-group">
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+  </div>
+
+  <div class="form-group">
+    <input type="hidden" name="verify" id="verify" value="false" autocomplete="false">
+  </div>
+</form>
+<script>
+  function captcha(){
+    window.open('http://127.0.0.1:5000/captcha',"VerifyHumanWindow","width=800, height=600");
+    return false;
+  }
+
+  function verifyCaptchaDone(){
+    if(! (document.getElementById('verify').value === 'true')){
+      alert('Captcha Not Verified. Please Verify and then submit');
+      return false;
+    }
+    return true;
+  }
+
+  window.onload = function(){
+    // console.log(document.getElementById('verify').value);
+    if(document.getElementById('verify').value === 'true'){
+      var btn = document.getElementById('verifybtn');
+      btn.innerText = "Verified ✔️";
+      btn.style.background = "#05cc15";
+    }
+    
+  }
+</script>
+{% endblock %}
